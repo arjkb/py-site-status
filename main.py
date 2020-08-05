@@ -11,13 +11,17 @@ def is_site_working(url):
 
     return False
 
+def get_site_status(url):
+    working = is_site_working(url)
+    print("{}\t{}".format('ONLINE' if working else 'OFFLINE', url))
+
 def main():
     urls = None
     with open('sitelist.txt') as f:
-        urls = [url.strip() for url in f.read().split("\n")]
+        urls = [url.strip() for url in f.read().strip().split("\n")]
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-        executor.map(is_site_working, urls)
+        executor.map(get_site_status, urls)
 
 if __name__ == "__main__":
     main()
