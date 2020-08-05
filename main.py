@@ -1,6 +1,8 @@
 import concurrent.futures
 import requests
 
+from termcolor import colored
+
 def is_site_working(url):
     try:
         r = requests.head(url, timeout=2)
@@ -12,8 +14,9 @@ def is_site_working(url):
     return False
 
 def get_site_status(url):
-    working = is_site_working(url)
-    print("{}\t{}".format('ONLINE' if working else 'OFFLINE', url))
+    (color, status) = ('green', 'ONLINE') if is_site_working(url) else ('red', 'OFFLINE')
+    report_string = "{}\t{}".format(status, url)
+    print(colored(report_string, color))
 
 def main():
     urls = None
