@@ -23,7 +23,7 @@ def main():
     with open('sitelist.txt') as f:
         urls = [url.strip() for url in f.read().strip().split("\n")]
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+    with concurrent.futures.ThreadPoolExecutor() as executor:
         executor.map(get_site_status, urls)
 
 if __name__ == "__main__":
